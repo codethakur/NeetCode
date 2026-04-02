@@ -24,3 +24,85 @@ public:
         return data;
     }
 };
+#if 0
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> data;
+    if (!root) return data;
+
+    stack<TreeNode*> st;
+    st.push(root);
+
+    while (!st.empty()) {
+        TreeNode* node = st.top();
+        st.pop();
+
+        data.push_back(node->val); // Root
+
+        // Push right first
+        if (node->right) st.push(node->right);
+
+        // Then left
+        if (node->left) st.push(node->left);
+    }
+
+    return data;
+    }
+};
+
+
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+            vector<int> res;
+    TreeNode* cur = root;
+
+    while (cur) {
+        if (!cur->left) {
+            res.push_back(cur->val);
+            cur = cur->right;
+        } else {
+            TreeNode* pred = cur->left;
+            while (pred->right && pred->right != cur)
+                pred = pred->right;
+
+            if (!pred->right) {
+                res.push_back(cur->val);    vector<int> res;
+    TreeNode* cur = root;
+
+    while (cur) {
+        if (!cur->left) {
+            res.push_back(cur->val);
+            cur = cur->right;
+        } else {
+            TreeNode* pred = cur->left;
+            while (pred->right && pred->right != cur)
+                pred = pred->right;
+
+            if (!pred->right) {
+                res.push_back(cur->val); // DIFFERENCE
+                pred->right = cur;
+                cur = cur->left;
+            } else {
+                pred->right = nullptr;
+                cur = cur->right;
+            }
+        }
+    }
+
+    return res;
+                pred->right = cur;
+                cur = cur->left;
+            } else {
+                pred->right = nullptr;
+                cur = cur->right;
+            }
+        }
+    }
+
+    return res;
+    }
+};
+
+#endif
