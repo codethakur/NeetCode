@@ -1,1 +1,2 @@
-<img width="720" height="822" alt="NeetCode" src="https://github.com/user-attachments/assets/d7919e42-97bb-4be1-9b3c-753b88df06e6" />
+<img width="1119" height="721" alt="NeetCode" src="https://github.com/user-attachments/assets/3ddcefac-f517-4287-bcde-8c7a93407cce" />
+
