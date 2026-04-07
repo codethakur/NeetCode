@@ -65,3 +65,41 @@ public:
     }
 };
 #endif
+
+
+#if 0
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        if(!root) return true;
+        stack<pair<TreeNode*, bool>> st;
+        unordered_map<TreeNode*, int> height;
+        
+        st.push({root, false});
+
+        while(!st.empty())
+        {
+            auto[node, visited] = st.top();
+            st.pop();
+            if (!node) continue;
+            
+            if(visited)
+            {
+                int left = node->left ? height[node->left] : 0;
+                int right = node->right ? height[node->right] : 0;
+
+                if(abs(left-right)>1) return false;
+
+               height[node] = 1 + max(left, right);
+            }else
+            {
+                st.push({node, true});
+                st.push({node->left, false});
+                st.push({node->right, false});
+            }
+        }
+        return true;
+    }
+};
+
+#endif
