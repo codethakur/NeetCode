@@ -9,6 +9,24 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+class Solution {
+    std::vector<int>nodeValue;
+    void solve(TreeNode* root)
+    {
+        if(!root) return;
+        nodeValue.push_back(root->val);
+        solve(root->left);
+        solve(root->right);
+    }
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        solve(root);
+        std::sort(nodeValue.begin(), nodeValue.end());
+        return nodeValue[k-1];
+        
+    }
+};
+#if 0
 
 class Solution {
 public:
@@ -34,3 +52,5 @@ public:
         return ans;
     }
 };
+
+#endif
