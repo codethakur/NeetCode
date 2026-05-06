@@ -28,7 +28,7 @@ public:
 
                 if (used[j]) continue;
 
-                // 🔥 duplicate handling
+                // duplicate handling
                 if (j > 0 && nums[j] == nums[j - 1] && !used[j - 1])
                     continue;
 
