@@ -12,13 +12,16 @@ public:
         for (int x : nums)
             sum += x;
 
+        // total must divide equally
         if (sum % k != 0)
             return false;
 
         int target = sum / k;
 
+        // large numbers first = better pruning
         sort(nums.rbegin(), nums.rend());
 
+        // impossible immediately
         if (nums[0] > target)
             return false;
 
@@ -29,6 +32,7 @@ public:
 
         stack<Frame> st;
 
+        // start state
         st.push({0, vector<int>(k, 0)});
 
         while (!st.empty()) {
@@ -37,37 +41,24 @@ public:
             st.pop();
 
             // all numbers placed
-            if (idx == nums.size()) {
+            if (idx == nums.size())
+                return true;
 
-                bool ok = true;
-
-                for (int x : buckets) {
-                    if (x != target) {
-                        ok = false;
-                        break;
-                    }
-                }
-
-                if (ok)
-                    return true;
-
-                continue;
-            }
-
-            // try placing nums[idx] into each bucket
+            // try placing nums[idx] into every bucket
             for (int i = k - 1; i >= 0; i--) {
 
                 // exceeds target
                 if (buckets[i] + nums[idx] > target)
                     continue;
 
-                // duplicate-state pruning
+                // skip duplicate bucket states
                 if (i < k - 1 &&
                     buckets[i] == buckets[i + 1])
                     continue;
 
                 vector<int> nextBuckets = buckets;
 
+                // place current number
                 nextBuckets[i] += nums[idx];
 
                 st.push({idx + 1, nextBuckets});
