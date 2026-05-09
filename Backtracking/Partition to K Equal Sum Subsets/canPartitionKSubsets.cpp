@@ -1,3 +1,4 @@
+#if 0
 class Solution {
 public:
 
@@ -74,5 +75,68 @@ public:
         }
 
         return false;
+    }
+};
+#endif 
+
+class Solution {
+
+    bool dfs(vector<int>& nums, int k, int target, int idx, vector<int>& buckets)
+    {
+        // all numbers placed
+        if (idx == nums.size())
+            return true;
+
+        for (int i = 0; i < k; i++)
+        {
+            // exceeds target
+            if (buckets[i] + nums[idx] > target)
+                continue;
+
+            // skip duplicate bucket states
+            if (i > 0 &&
+                buckets[i] == buckets[i - 1])
+                continue;
+
+            // choose
+            buckets[i] += nums[idx];
+
+            // explore
+            if (dfs(nums, k, target,
+                    idx + 1, buckets))
+                return true;
+
+            // BACKTRACK
+            buckets[i] -= nums[idx];
+        }
+
+        return false;
+    }
+
+public:
+
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+
+        if (k > nums.size())
+            return false;
+
+        int sum = 0;
+
+        for (int x : nums)
+            sum += x;
+
+        if (sum % k != 0)
+            return false;
+
+        int target = sum / k;
+
+        sort(nums.rbegin(), nums.rend());
+
+        if (nums[0] > target)
+            return false;
+
+        vector<int> buckets(k, 0);
+
+        return dfs(nums, k, target, 0, buckets);
     }
 };
