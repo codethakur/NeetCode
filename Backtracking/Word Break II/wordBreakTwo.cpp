@@ -1,3 +1,4 @@
+#if 0
 class Solution {
 public:
 
@@ -65,6 +66,74 @@ public:
                 });
             }
         }
+
+        return ans;
+    }
+};
+#endif
+class Solution {
+
+    void dfs(string& s,
+             int idx,
+             unordered_set<string>& dict,
+             string sentence,
+             vector<string>& ans)
+    {
+        // whole string consumed
+        if (idx == s.size()) {
+            ans.push_back(sentence);
+            return;
+        }
+
+        // try every next word
+        for (int end = idx;
+             end < s.size();
+             end++)
+        {
+            string word =
+                s.substr(
+                    idx,
+                    end - idx + 1
+                );
+
+            // not valid word
+            if (!dict.count(word))
+                continue;
+
+            string nextSentence;
+
+            if (sentence.empty())
+                nextSentence = word;
+            else
+                nextSentence =
+                    sentence + " " + word;
+
+            dfs(s,
+                end + 1,
+                dict,
+                nextSentence,
+                ans);
+        }
+    }
+
+public:
+
+    vector<string> wordBreak(
+        string s,
+        vector<string>& wordDict)
+    {
+        unordered_set<string> dict(
+            wordDict.begin(),
+            wordDict.end()
+        );
+
+        vector<string> ans;
+
+        dfs(s,
+            0,
+            dict,
+            "",
+            ans);
 
         return ans;
     }
